@@ -2,7 +2,7 @@ require("should");
 
 var xmlBuilder = require("../../lib/xml-builder");
 
-describe("buildCreateSubscriptionXml", function() {
+describe("xmlBuilder.buildCreateSubscriptionXml", function() {
     it("should serialize a create subscription request", function() {
         var xml = xmlBuilder.buildCreateSubscriptionXml({
             merchantAuthentication: {
