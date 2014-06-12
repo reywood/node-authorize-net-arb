@@ -13,13 +13,13 @@ module.exports = function(grunt) {
 
             unit: {
                 src: [
-                    "tests/unit/**/*_spec.js"
+                    "tests/unit/**/*-spec.js"
                 ]
             },
 
             acceptance: {
                 src: [
-                    "tests/acceptance/**/*_spec.js"
+                    "tests/acceptance/**/*-spec.js"
                 ]
             }
         }

@@ -1,6 +1,6 @@
 require("should");
 
-var xmlBuilder = require("../../lib/xml_builder");
+var xmlBuilder = require("../../lib/xml-builder");
 
 describe("buildCreateSubscriptionXml", function() {
     it("should serialize a create subscription request", function() {
