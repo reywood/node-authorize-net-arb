@@ -2,14 +2,14 @@
   "name": "authorize-net-arb",
   "version": "0.0.0",
   "description": "Authorize.net Automated Recurring Billing (ARB)",
-  "main": "arb.js",
-  "directories": {
-    "test": "tests"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reywood/node-authorize-net-arb.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Sean Dwyer",
   "license": "ISC",
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -18,6 +18,6 @@
   },
   "dependencies": {
     "underscore": "^1.6.0",
-    "xml": "0.0.12"
+    "xml": "^0.0.12"
   }
 }
