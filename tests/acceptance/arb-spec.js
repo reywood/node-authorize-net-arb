@@ -1,5 +1,4 @@
 require("should");
-require("./fake-https");
 
 var AuthNetArb = require("../../lib/arb").AuthNetArb;
 var credentials = require("./credentials");
