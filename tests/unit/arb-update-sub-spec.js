@@ -1,31 +1,86 @@
+require("should");
+
 var fakeHttps = require("./fake-https");
-
-var arb = require("../../lib/arb").client("my-login-name", "my-transaction-key");
 var responses = require("./responses");
+var arbClient = require("../../lib/arb").client("my-login-name", "my-transaction-key");
 
-var basicSubscription = {
+var request = {
         refId: "my-ref",
         subscriptionId: "1234567890",
-        name: "my-subscription",
-        paymentSchedule: {
-            startDate: "2015-01-31",
-            totalOccurrences: 9999
-        },
-        amount: 19.99,
-        payment: {
-            creditCard: {
-                cardNumber: "4111111111111111",
-                expirationDate: "2020-01",
-                cardCode: "111"
+        subscription: {
+            name: "my-subscription",
+            paymentSchedule: {
+                startDate: "2015-01-31",
+                totalOccurrences: 9999,
+                trialOccurrences: 1
+            },
+            amount: 19.99,
+            trialAmount: 0,
+            payment: {
+                creditCard: {
+                    cardNumber: "4111111111111111",
+                    expirationDate: "2020-01",
+                    cardCode: "111"
+                }
+            },
+            customer: {
+                id: "abc123"
+            },
+            billTo: {
+                firstName: "Jane",
+                lastName: "Doe"
+            },
+            shipTo: {
+                address: "123 Main St"
             }
         }
     };
 
-describe("arb.updateSubscription", function() {
+describe("arb.client.updateSubscription", function() {
+    it("should serialize an update subscription request", function() {
+        arbClient.updateSubscription(request);
+
+        fakeHttps.getDataWrittenInLastRequest().should.equal(
+            '<?xml version="1.0" encoding="utf-8"?>' +
+            '<ARBUpdateSubscriptionRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">' +
+                '<merchantAuthentication>' +
+                    '<name>my-login-name</name>' +
+                    '<transactionKey>my-transaction-key</transactionKey>' +
+                '</merchantAuthentication>' +
+                '<refId>my-ref</refId>' +
+                '<subscriptionId>1234567890</subscriptionId>' +
+                '<subscription>' +
+                    '<name>my-subscription</name>' +
+                    '<paymentSchedule>' +
+                        '<startDate>2015-01-31</startDate>' +
+                        '<totalOccurrences>9999</totalOccurrences>' +
+                        '<trialOccurrences>1</trialOccurrences>' +
+                    '</paymentSchedule>' +
+                    '<amount>19.99</amount>' +
+                    '<trialAmount>0</trialAmount>' +
+                    '<payment>' +
+                        '<creditCard>' +
+                            '<cardNumber>4111111111111111</cardNumber>' +
+                            '<expirationDate>2020-01</expirationDate>' +
+                            '<cardCode>111</cardCode>' +
+                        '</creditCard>' +
+                    '</payment>' +
+                    '<customer><id>abc123</id></customer>' +
+                    '<billTo>' +
+                        '<firstName>Jane</firstName>' +
+                        '<lastName>Doe</lastName>' +
+                    '</billTo>' +
+                    '<shipTo>' +
+                        '<address>123 Main St</address>' +
+                    '</shipTo>' +
+                '</subscription>' +
+            '</ARBUpdateSubscriptionRequest>');
+    });
+
     it("should send a request to update a subscription", function(done) {
         fakeHttps.addResponseData(responses.updateSubSuccess);
 
-        arb.updateSubscription(basicSubscription, function(error, response) {
+        arbClient.updateSubscription(request, function(error, response) {
             (typeof error === "undefined").should.be.true;
 
             response.refId.should.equal("my-ref");
@@ -37,7 +92,7 @@ describe("arb.updateSubscription", function() {
     it("should return an error if method specific Authorize.net failure response is received", function(done) {
         fakeHttps.addResponseData(responses.updateSubError);
 
-        arb.updateSubscription(basicSubscription, function(error, response) {
+        arbClient.updateSubscription(request, function(error, response) {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 
@@ -53,7 +108,7 @@ describe("arb.updateSubscription", function() {
     it("should return an error if a general Authorize.net failure response is received", function(done) {
         fakeHttps.addResponseData(responses.generalError);
 
-        arb.updateSubscription(basicSubscription, function(error, response) {
+        arbClient.updateSubscription(request, function(error, response) {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 
@@ -69,7 +124,7 @@ describe("arb.updateSubscription", function() {
     it("should return an error if unexpected (but valid) XML is received", function(done) {
         fakeHttps.addResponseData("<unexpected></unexpected>");
 
-        arb.updateSubscription(basicSubscription, function(error, response) {
+        arbClient.updateSubscription(request, function(error, response) {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 
@@ -84,7 +139,7 @@ describe("arb.updateSubscription", function() {
     it("should return an error if invalid XML is received", function(done) {
         fakeHttps.addResponseData("<invalid");
 
-        arb.updateSubscription(basicSubscription, function(error, response) {
+        arbClient.updateSubscription(request, function(error, response) {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 
@@ -99,7 +154,7 @@ describe("arb.updateSubscription", function() {
     it("should return an error if the http connection fails", function(done) {
         fakeHttps.throwErrorOnNextRequest();
 
-        arb.updateSubscription(basicSubscription, function(error, response) {
+        arbClient.updateSubscription(request, function(error, response) {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 

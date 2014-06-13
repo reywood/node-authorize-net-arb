@@ -1,6 +1,7 @@
+require("should");
+
 var fakeHttps = require("./fake-https");
 var responses = require("./responses");
-
 var httpClient = require("../../lib/http-client");
 var arb = require("../../lib/arb");
 
@@ -10,9 +11,9 @@ describe("arb.useSandbox", function() {
 
         fakeHttps.addResponseData(responses.getSubStatusSuccess);
 
-        var client = arb.client("my-login-name", "my-transaction-key");
+        var arbClient = arb.client("my-login-name", "my-transaction-key");
 
-        client.getSubscriptionStatus({ subscriptionId: "1234567890" }, function() {
+        arbClient.getSubscriptionStatus({ subscriptionId: "1234567890" }, function() {
             fakeHttps.getHostUsedInLastRequest().should.equal(httpClient.sandboxHost);
 
             done();

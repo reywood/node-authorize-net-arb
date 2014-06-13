@@ -2,6 +2,7 @@ var https = require("https");
 var responseData = [];
 var throwErrorOnNextRequest = false;
 var lastHostUsed;
+var lastDataWritten;
 
 https.request = function(options, callback) {
     lastHostUsed = options.host;
@@ -19,7 +20,7 @@ FakeRequest.prototype.on = function(event, handler) {
 };
 
 FakeRequest.prototype.write = function(data) {
-    this.dataWritten = data;
+    lastDataWritten = data;
 };
 
 FakeRequest.prototype.end = function() {
@@ -68,5 +69,8 @@ module.exports = {
     },
     getHostUsedInLastRequest: function() {
         return lastHostUsed;
+    },
+    getDataWrittenInLastRequest: function() {
+        return lastDataWritten;
     }
 };

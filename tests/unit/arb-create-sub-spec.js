@@ -1,34 +1,93 @@
+require("should");
+
 var fakeHttps = require("./fake-https");
-
-var arb = require("../../lib/arb").client("my-login-name", "my-transaction-key");
 var responses = require("./responses");
+var arbClient = require("../../lib/arb").client("my-login-name", "my-transaction-key");
 
-var basicSubscription = {
+var request = {
         refId: "my-ref",
-        name: "my-subscription",
-        paymentSchedule: {
-            interval: {
-                length: 1,
-                unit: "months"
+        subscription: {
+            name: "my-subscription",
+            paymentSchedule: {
+                interval: {
+                    length: 1,
+                    unit: "months"
+                },
+                startDate: "2015-01-31",
+                totalOccurrences: 9999,
+                trialOccurrences: 1
             },
-            startDate: "2015-01-31",
-            totalOccurrences: 9999
-        },
-        amount: 19.99,
-        payment: {
-            creditCard: {
-                cardNumber: "4111111111111111",
-                expirationDate: "2020-01",
-                cardCode: "111"
+            amount: 19.99,
+            trialAmount: 0,
+            payment: {
+                creditCard: {
+                    cardNumber: "4111111111111111",
+                    expirationDate: "2020-01",
+                    cardCode: "111"
+                }
+            },
+            customer: {
+                id: "abc123"
+            },
+            billTo: {
+                firstName: "Jane",
+                lastName: "Doe"
+            },
+            shipTo: {
+                address: "123 Main St"
             }
         }
     };
 
-describe("arb.createSubscription", function() {
+describe("arb.client.createSubscription", function() {
+    it("should serialize a create subscription request", function() {
+        arbClient.createSubscription(request);
+
+        fakeHttps.getDataWrittenInLastRequest().should.equal(
+            '<?xml version="1.0" encoding="utf-8"?>' +
+            '<ARBCreateSubscriptionRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">' +
+                '<merchantAuthentication>' +
+                    '<name>my-login-name</name>' +
+                    '<transactionKey>my-transaction-key</transactionKey>' +
+                '</merchantAuthentication>' +
+                '<refId>my-ref</refId>' +
+                '<subscription>' +
+                    '<name>my-subscription</name>' +
+                    '<paymentSchedule>' +
+                        '<interval>' +
+                            '<length>1</length>' +
+                            '<unit>months</unit>' +
+                        '</interval>' +
+                        '<startDate>2015-01-31</startDate>' +
+                        '<totalOccurrences>9999</totalOccurrences>' +
+                        '<trialOccurrences>1</trialOccurrences>' +
+                    '</paymentSchedule>' +
+                    '<amount>19.99</amount>' +
+                    '<trialAmount>0</trialAmount>' +
+                    '<payment>' +
+                        '<creditCard>' +
+                            '<cardNumber>4111111111111111</cardNumber>' +
+                            '<expirationDate>2020-01</expirationDate>' +
+                            '<cardCode>111</cardCode>' +
+                        '</creditCard>' +
+                    '</payment>' +
+                    '<customer><id>abc123</id></customer>' +
+                    '<billTo>' +
+                        '<firstName>Jane</firstName>' +
+                        '<lastName>Doe</lastName>' +
+                    '</billTo>' +
+                    '<shipTo>' +
+                        '<address>123 Main St</address>' +
+                    '</shipTo>' +
+                '</subscription>' +
+            '</ARBCreateSubscriptionRequest>'
+        );
+    });
+
     it("should send a request and return subscriptionId on success", function(done) {
         fakeHttps.addResponseData(responses.createSubSuccess);
 
-        arb.createSubscription(basicSubscription, function(error, response) {
+        arbClient.createSubscription(request, function(error, response) {
             (typeof error === "undefined").should.be.true;
 
             response.refId.should.equal("my-ref");
@@ -41,7 +100,7 @@ describe("arb.createSubscription", function() {
     it("should return an error if method specific Authorize.net failure response is received", function(done) {
         fakeHttps.addResponseData(responses.createSubError);
 
-        arb.createSubscription(basicSubscription, function(error, response) {
+        arbClient.createSubscription(request, function(error, response) {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 
@@ -57,7 +116,7 @@ describe("arb.createSubscription", function() {
     it("should return an error if a general Authorize.net failure response is received", function(done) {
         fakeHttps.addResponseData(responses.generalError);
 
-        arb.createSubscription(basicSubscription, function(error, response) {
+        arbClient.createSubscription(request, function(error, response) {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 
@@ -73,7 +132,7 @@ describe("arb.createSubscription", function() {
     it("should return an error if unexpected (but valid) XML is received", function(done) {
         fakeHttps.addResponseData("<unexpected></unexpected>");
 
-        arb.createSubscription(basicSubscription, function(error, response) {
+        arbClient.createSubscription(request, function(error, response) {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 
@@ -88,7 +147,7 @@ describe("arb.createSubscription", function() {
     it("should return an error if invalid XML is received", function(done) {
         fakeHttps.addResponseData("<invalid");
 
-        arb.createSubscription(basicSubscription, function(error, response) {
+        arbClient.createSubscription(request, function(error, response) {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 
@@ -103,7 +162,7 @@ describe("arb.createSubscription", function() {
     it("should return an error if the http connection fails", function(done) {
         fakeHttps.throwErrorOnNextRequest();
 
-        arb.createSubscription(basicSubscription, function(error, response) {
+        arbClient.createSubscription(request, function(error, response) {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 

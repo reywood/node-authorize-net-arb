@@ -1,5 +1,4 @@
 var fs = require("fs");
-
 var readOptions = { encoding: "utf8" };
 var responseDir = __dirname + "/responses";
 

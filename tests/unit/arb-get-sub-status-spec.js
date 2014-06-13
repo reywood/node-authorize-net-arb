@@ -1,7 +1,8 @@
-var fakeHttps = require("./fake-https");
+require("should");
 
-var arb = require("../../lib/arb").client("my-login-name", "my-transaction-key");
+var fakeHttps = require("./fake-https");
 var responses = require("./responses");
+var arbClient = require("../../lib/arb").client("my-login-name", "my-transaction-key");
 
 var request = {
     refId: "my-ref",
@@ -9,11 +10,26 @@ var request = {
 };
 
 
-describe("arb.getSubscriptionStatus", function() {
+describe("arb.client.getSubscriptionStatus", function() {
+    it("should serialize a get subscription status request", function() {
+        arbClient.getSubscriptionStatus(request);
+
+        fakeHttps.getDataWrittenInLastRequest().should.equal(
+            '<?xml version="1.0" encoding="utf-8"?>' +
+            '<ARBGetSubscriptionStatusRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">' +
+                '<merchantAuthentication>' +
+                    '<name>my-login-name</name>' +
+                    '<transactionKey>my-transaction-key</transactionKey>' +
+                '</merchantAuthentication>' +
+                '<refId>my-ref</refId>' +
+                '<subscriptionId>1234567890</subscriptionId>' +
+            '</ARBGetSubscriptionStatusRequest>');
+    });
+
     it("should send a request and return status on success", function(done) {
         fakeHttps.addResponseData(responses.getSubStatusSuccess);
 
-        arb.getSubscriptionStatus(request, function(error, response) {
+        arbClient.getSubscriptionStatus(request, function(error, response) {
             (typeof error === "undefined").should.be.true;
 
             response.refId.should.equal("my-ref");
@@ -26,7 +42,7 @@ describe("arb.getSubscriptionStatus", function() {
     it("should return an error if method specific Authorize.net failure response is received", function(done) {
         fakeHttps.addResponseData(responses.getSubStatusError);
 
-        arb.getSubscriptionStatus(request, function(error, response) {
+        arbClient.getSubscriptionStatus(request, function(error, response) {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 
@@ -42,7 +58,7 @@ describe("arb.getSubscriptionStatus", function() {
     it("should return an error if invalid XML is received", function(done) {
         fakeHttps.addResponseData("<invalid");
 
-        arb.getSubscriptionStatus(request, function(error, response) {
+        arbClient.getSubscriptionStatus(request, function(error, response) {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 
@@ -57,7 +73,7 @@ describe("arb.getSubscriptionStatus", function() {
     it("should return an error if the http connection fails", function(done) {
         fakeHttps.throwErrorOnNextRequest();
 
-        arb.getSubscriptionStatus(request, function(error, response) {
+        arbClient.getSubscriptionStatus(request, function(error, response) {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 
