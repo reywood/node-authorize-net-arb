@@ -8,6 +8,6 @@
             <text>Successful.</text>
         </message>
     </messages>
-    <status>canceled</status>
-    <Status>canceled</Status>
+    <status>active</status>
+    <Status>active</Status>
 </ARBGetSubscriptionStatusResponse>

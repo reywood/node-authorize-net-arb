@@ -3,7 +3,7 @@ require("should");
 var credentials = require("./credentials");
 var arb = require("../../lib/arb")(credentials.loginName, credentials.transactionKey);
 
-describe("AuthNetArb.createSubscription", function() {
+describe("arb.createSubscription", function() {
     it("should create a subscription", function(done) {
         var subscription = {
             name: "test-subscription",
