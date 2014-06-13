@@ -10,6 +10,9 @@ var read = function(fileName) {
 module.exports = {
     generalError: read("general-error.xml"),
 
+    cancelSubSuccess: read("cancel-sub-success.xml"),
+    cancelSubError: read("cancel-sub-error.xml"),
+
     createSubSuccess: read("create-sub-success.xml"),
     createSubError: read("create-sub-error.xml"),
 

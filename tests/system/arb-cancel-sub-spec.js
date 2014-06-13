@@ -3,9 +3,9 @@ require("should");
 var credentials = require("./credentials");
 var arb = require("../../lib/arb")(credentials.loginName, credentials.transactionKey);
 
-describe("arb.getSubscriptionStatus", function() {
+describe("arb.cancelSubscription", function() {
     it("should get status", function(done) {
-        arb.getSubscriptionStatus({ refId: "my-ref", subscriptionId: "21093408" }, function(error, response) {
+        arb.cancelSubscription({ refId: "my-ref", subscriptionId: "21104510" }, function(error, response) {
             if (error) {
                 console.log(JSON.stringify(error));
             }
