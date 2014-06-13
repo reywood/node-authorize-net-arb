@@ -14,5 +14,8 @@ module.exports = {
     createSubError: read("create-sub-error.xml"),
 
     getSubStatusSuccess: read("get-sub-status-success.xml"),
-    getSubStatusError: read("get-sub-status-error.xml")
+    getSubStatusError: read("get-sub-status-error.xml"),
+
+    updateSubSuccess: read("update-sub-success.xml"),
+    updateSubError: read("update-sub-error.xml")
 };
