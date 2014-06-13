@@ -1,16 +1,43 @@
 {
   "name": "authorize-net-arb",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Authorize.net Automated Recurring Billing (ARB)",
+  "homepage": "https://github.com/reywood/node-authorize-net-arb",
+  "bugs": {
+    "url": "https://github.com/reywood/node-authorize-net-arb/issues"
+  },
+  "author": {
+    "name": "Sean Dwyer",
+    "email": "sean@braindump.io",
+    "url": "http://braindump.io"
+  },
+  "keywords": [
+    "authorize.net",
+    "auth.net",
+    "arb",
+    "automated",
+    "recurring",
+    "billing",
+    "credit card",
+    "subscription"
+  ],
+  "main": "lib/arb.js",
+  "files": [
+    "lib/",
+    "LICENSE.txt"
+  ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/reywood/node-authorize-net-arb.git"
+    "url": "git://github.com/reywood/node-authorize-net-arb.git"
   },
   "scripts": {
     "test": "grunt"
   },
   "author": "Sean Dwyer",
   "license": "ISC",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-contrib-jshint": "^0.10.0",

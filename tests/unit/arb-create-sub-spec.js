@@ -5,39 +5,39 @@ var responses = require("./responses");
 var arbClient = require("../../lib/arb").client("my-login-name", "my-transaction-key");
 
 var request = {
-        refId: "my-ref",
-        subscription: {
-            name: "my-subscription",
-            paymentSchedule: {
-                interval: {
-                    length: 1,
-                    unit: "months"
-                },
-                startDate: "2015-01-31",
-                totalOccurrences: 9999,
-                trialOccurrences: 1
+    refId: "my-ref",
+    subscription: {
+        name: "my-subscription",
+        paymentSchedule: {
+            interval: {
+                length: 1,
+                unit: "months"
             },
-            amount: 19.99,
-            trialAmount: 0,
-            payment: {
-                creditCard: {
-                    cardNumber: "4111111111111111",
-                    expirationDate: "2020-01",
-                    cardCode: "111"
-                }
-            },
-            customer: {
-                id: "abc123"
-            },
-            billTo: {
-                firstName: "Jane",
-                lastName: "Doe"
-            },
-            shipTo: {
-                address: "123 Main St"
+            startDate: "2015-01-31",
+            totalOccurrences: 9999,
+            trialOccurrences: 1
+        },
+        amount: 19.99,
+        trialAmount: 0,
+        payment: {
+            creditCard: {
+                cardNumber: "4111111111111111",
+                expirationDate: "2020-01",
+                cardCode: "111"
             }
+        },
+        customer: {
+            id: "abc123"
+        },
+        billTo: {
+            firstName: "Jane",
+            lastName: "Doe"
+        },
+        shipTo: {
+            address: "123 Main St"
         }
-    };
+    }
+};
 
 describe("arb.client.createSubscription", function() {
     it("should serialize a create subscription request", function() {
