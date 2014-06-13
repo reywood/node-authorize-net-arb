@@ -1,13 +1,16 @@
 require("should");
 
 var credentials = require("./credentials");
-var arb = require("../../lib/arb")(credentials.loginName, credentials.transactionKey);
+var arb = require("../../lib/arb");
+var client = arb.client(credentials.loginName, credentials.transactionKey);
 
-describe("arb.updateSubscription", function() {
+arb.useSandbox();
+
+describe("arb.client.updateSubscription", function() {
     it("should update a subscription", function(done) {
         var subscription = {
             refId: "my-ref",
-            subscriptionId: "21104510",
+            subscriptionId: "2107121",
             name: "test-subscription",
             paymentSchedule: {
                 startDate: "2015-03-31",
@@ -35,7 +38,7 @@ describe("arb.updateSubscription", function() {
             }
         };
 
-        arb.updateSubscription(subscription, function(error, response) {
+        client.updateSubscription(subscription, function(error, response) {
             if (error) {
                 console.log(JSON.stringify(error));
             }

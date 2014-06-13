@@ -1,11 +1,14 @@
 require("should");
 
 var credentials = require("./credentials");
-var arb = require("../../lib/arb")(credentials.loginName, credentials.transactionKey);
+var arb = require("../../lib/arb");
+var client = arb.client(credentials.loginName, credentials.transactionKey);
 
-describe("arb.getSubscriptionStatus", function() {
+arb.useSandbox();
+
+describe("arb.client.getSubscriptionStatus", function() {
     it("should get status", function(done) {
-        arb.getSubscriptionStatus({ refId: "my-ref", subscriptionId: "21093408" }, function(error, response) {
+        client.getSubscriptionStatus({ refId: "my-ref", subscriptionId: "2107121" }, function(error, response) {
             if (error) {
                 console.log(JSON.stringify(error));
             }

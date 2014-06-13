@@ -1,9 +1,12 @@
 require("should");
 
 var credentials = require("./credentials");
-var arb = require("../../lib/arb")(credentials.loginName, credentials.transactionKey);
+var arb = require("../../lib/arb");
+var client = arb.client(credentials.loginName, credentials.transactionKey);
 
-describe("arb.createSubscription", function() {
+arb.useSandbox();
+
+describe("arb.client.createSubscription", function() {
     it("should create a subscription", function(done) {
         var subscription = {
             name: "test-subscription",
@@ -37,7 +40,7 @@ describe("arb.createSubscription", function() {
             }
         };
 
-        arb.createSubscription(subscription, function(error, response) {
+        client.createSubscription(subscription, function(error, response) {
             if (error) {
                 console.log(JSON.stringify(error));
             }

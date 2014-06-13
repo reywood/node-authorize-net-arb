@@ -1,8 +1,10 @@
 var https = require("https");
 var responseData = [];
 var throwErrorOnNextRequest = false;
+var lastHostUsed;
 
 https.request = function(options, callback) {
+    lastHostUsed = options.host;
     return new FakeRequest(callback);
 };
 
@@ -63,5 +65,8 @@ module.exports = {
     },
     throwErrorOnNextRequest: function() {
         throwErrorOnNextRequest = true;
+    },
+    getHostUsedInLastRequest: function() {
+        return lastHostUsed;
     }
 };

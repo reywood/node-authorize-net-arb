@@ -1,6 +1,6 @@
 var fakeHttps = require("./fake-https");
 
-var arb = require("../../lib/arb")("my-login-name", "my-transaction-key");
+var arb = require("../../lib/arb").client("my-login-name", "my-transaction-key");
 var responses = require("./responses");
 
 var request = {
