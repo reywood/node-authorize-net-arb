@@ -5,7 +5,7 @@ var arb = require("../../lib/arb")(credentials.loginName, credentials.transactio
 
 describe("arb.getSubscriptionStatus", function() {
     it("should get status", function(done) {
-        arb.getSubscriptionStatus({ refId: "my-ref", subscriptionId: "21093408" }, function(error, response) {
+        arb.getSubscriptionStatus({ refId: "my-ref", subscriptionId: "2109340800" }, function(error, response) {
             (typeof error === "undefined").should.be.true;
 
             response.status.length.should.be.greaterThan(0);

@@ -38,7 +38,7 @@ describe("arb.createSubscription", function() {
         });
     });
 
-    it("should return an error if Authorize.net failure response is received", function(done) {
+    it("should return an error if method specific Authorize.net failure response is received", function(done) {
         fakeHttps.addResponseData(responses.createSubError);
 
         arb.createSubscription(basicSubscription, function(error, response) {
@@ -49,6 +49,37 @@ describe("arb.createSubscription", function() {
             error.source.should.equal("auth-net");
             error.code.should.equal("E00017");
             error.message.should.equal("Start Date must not occur before the submission date.");
+
+            done();
+        });
+    });
+
+    it("should return an error if a general Authorize.net failure response is received", function(done) {
+        fakeHttps.addResponseData(responses.generalError);
+
+        arb.createSubscription(basicSubscription, function(error, response) {
+            (typeof error === "undefined").should.be.false;
+            (typeof response === "undefined").should.be.true;
+
+            error.refId.should.equal("my-ref");
+            error.source.should.equal("auth-net");
+            error.code.should.equal("E00003");
+            error.message.should.equal("Error detail text");
+
+            done();
+        });
+    });
+
+    it("should return an error if unexpected (but valid) XML is received", function(done) {
+        fakeHttps.addResponseData("<unexpected></unexpected>");
+
+        arb.createSubscription(basicSubscription, function(error, response) {
+            (typeof error === "undefined").should.be.false;
+            (typeof response === "undefined").should.be.true;
+
+            error.refId.should.equal("my-ref");
+            error.source.should.equal("auth-net");
+            error.message.should.equal("Unexpected XML response received");
 
             done();
         });
