@@ -1,9 +1,26 @@
 module.exports = function(grunt) {
     "use strict";
 
+    grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-simple-mocha");
 
     grunt.initConfig({
+        jshint: {
+            options: {
+                "jshintrc": true
+            },
+
+            all: {
+                files: {
+                    src: [
+                        "Gruntfile.js",
+                        "lib/**/*.js",
+                        "tests/**/*.js"
+                    ]
+                }
+            }
+        },
+
         simplemocha: {
             options: {
                 ignoreLeaks: false,
@@ -15,16 +32,9 @@ module.exports = function(grunt) {
                 src: [
                     "tests/unit/**/*-spec.js"
                 ]
-            },
-
-            acceptance: {
-                src: [
-                    "tests/acceptance/**/*-spec.js"
-                ]
             }
         }
     });
 
-    grunt.registerTask("default", [ "simplemocha:unit" ]);
-    grunt.registerTask("acceptance", [ "simplemocha:acceptance" ]);
+    grunt.registerTask("default", [ "jshint", "simplemocha:unit" ]);
 };

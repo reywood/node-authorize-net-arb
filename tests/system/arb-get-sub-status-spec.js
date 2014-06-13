@@ -8,7 +8,9 @@ describe("AuthNetArb.getSubscriptionStatus", function() {
         arb.getSubscriptionStatus({ refId: "my-ref", subscriptionId: "21093408" }, function(error, response) {
             (typeof error === "undefined").should.be.true;
 
+            response.status.length.should.be.greaterThan(0);
+
             done();
         });
-    })
+    });
 });

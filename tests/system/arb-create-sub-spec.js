@@ -40,6 +40,8 @@ describe("AuthNetArb.createSubscription", function() {
         arb.createSubscription(subscription, function(error, response) {
             (typeof error === "undefined").should.be.true;
 
+            response.subscriptionId.length.should.be.greaterThan(0);
+
             done();
         });
     });
