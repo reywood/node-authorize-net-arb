@@ -1,5 +1,6 @@
 var https = require("https");
 var responseData = [];
+var throwErrorOnNextRequest = false;
 
 https.request = function(options, callback) {
     return new FakeRequest(callback);
@@ -8,6 +9,11 @@ https.request = function(options, callback) {
 
 var FakeRequest = function(callback) {
     this.callback = callback;
+    this.eventHandlers = {};
+};
+
+FakeRequest.prototype.on = function(event, handler) {
+    this.eventHandlers[event] = handler;
 };
 
 FakeRequest.prototype.write = function(data) {
@@ -15,6 +21,14 @@ FakeRequest.prototype.write = function(data) {
 };
 
 FakeRequest.prototype.end = function() {
+    if (throwErrorOnNextRequest) {
+        throwErrorOnNextRequest = false;
+        if (this.eventHandlers["error"]) {
+            this.eventHandlers["error"]({ message: "An HTTP error occurred" });
+        }
+        return;
+    }
+
     var response = new FakeResponse();
     this.callback(response);
 
@@ -46,5 +60,8 @@ FakeResponse.prototype.on = function(event, handler) {
 module.exports = {
     addResponseData: function(data) {
         responseData.push(data);
+    },
+    throwErrorOnNextRequest: function() {
+        throwErrorOnNextRequest = true;
     }
 };
