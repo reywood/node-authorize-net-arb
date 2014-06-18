@@ -188,7 +188,7 @@ If the call succeeds, the `response` object will have the format:
 ```javascript
 {
     refId: "my-ref",
-    status: "active|expired|suspended|cancelled|terminated"
+    status: "active|expired|suspended|canceled|terminated"
 }
 ```
 
