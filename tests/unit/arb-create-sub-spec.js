@@ -179,7 +179,7 @@ describe("arb.client.createSubscription", function() {
             (typeof response === "undefined").should.be.true;
 
             error.refId.should.equal("my-ref");
-            error.source.should.equal("auth-net");
+            error.source.should.equal("http");
             error.message.should.equal("Unexpected XML response received");
 
             done();
@@ -209,7 +209,7 @@ describe("arb.client.createSubscription", function() {
             (typeof response === "undefined").should.be.true;
 
             error.refId.should.equal("my-ref");
-            error.source.should.equal("https");
+            error.source.should.equal("http");
             error.message.should.equal("An HTTP error occurred");
 
             done();
