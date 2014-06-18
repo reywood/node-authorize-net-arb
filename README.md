@@ -36,6 +36,10 @@ var request = {
     refId: "my-ref",
     subscription: {
         name: "my-subscription",
+        order: {
+            invoiceNumber: "inv-0001",
+            description: "My Subscription"
+        },
         paymentSchedule: {
             interval: {
                 length: 1,
@@ -55,17 +59,28 @@ var request = {
             }
         },
         customer: {
-            id: "abc123"
+            id: "abc123",
+            email: "jane.doe@example.com",
+            phoneNumber: "555-555-5555",
+            faxNumber: "555-555-5555"
         },
         billTo: {
             firstName: "Jane",
             lastName: "Doe",
-            address: "123 Main St"
+            address: "123 Main St",
+            city: "Anytown",
+            state: "CA",
+            zip: "11111",
+            country: "US"
         },
         shipTo: {
             firstName: "Jane",
             lastName: "Doe",
-            address: "123 Main St"
+            address: "123 Main St",
+            city: "Anytown",
+            state: "CA",
+            zip: "11111",
+            country: "US"
         }
     }
 };

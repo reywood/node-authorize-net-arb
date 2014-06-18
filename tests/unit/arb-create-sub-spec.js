@@ -8,6 +8,10 @@ var request = {
     refId: "my-ref",
     subscription: {
         name: "my-subscription",
+        order: {
+            invoiceNumber: "inv-0001",
+            description: "My Subscription"
+        },
         paymentSchedule: {
             interval: {
                 length: 1,
@@ -27,14 +31,30 @@ var request = {
             }
         },
         customer: {
-            id: "abc123"
+            id: "abc123",
+            email: "jane.doe@example.com",
+            phoneNumber: "555-555-5555",
+            faxNumber: "555-555-5555"
         },
         billTo: {
             firstName: "Jane",
-            lastName: "Doe"
+            lastName: "Doe",
+            company: "ABC Corp",
+            address: "123 Main St",
+            city: "Anytown",
+            state: "CA",
+            zip: "11111",
+            country: "US"
         },
         shipTo: {
-            address: "123 Main St"
+            firstName: "John",
+            lastName: "Public",
+            company: "XYZ Inc",
+            address: "456 Main St",
+            city: "Othertown",
+            state: "BC",
+            zip: "22222",
+            country: "CA"
         }
     }
 };
@@ -71,13 +91,35 @@ describe("arb.client.createSubscription", function() {
                             '<cardCode>111</cardCode>' +
                         '</creditCard>' +
                     '</payment>' +
-                    '<customer><id>abc123</id></customer>' +
+                    '<order>' +
+                        '<invoiceNumber>inv-0001</invoiceNumber>' +
+                        '<description>My Subscription</description>' +
+                    '</order>' +
+                    '<customer>' +
+                        '<id>abc123</id>' +
+                        '<email>jane.doe@example.com</email>' +
+                        '<phoneNumber>555-555-5555</phoneNumber>' +
+                        '<faxNumber>555-555-5555</faxNumber>' +
+                    '</customer>' +
                     '<billTo>' +
                         '<firstName>Jane</firstName>' +
                         '<lastName>Doe</lastName>' +
+                        '<company>ABC Corp</company>' +
+                        '<address>123 Main St</address>' +
+                        '<city>Anytown</city>' +
+                        '<state>CA</state>' +
+                        '<zip>11111</zip>' +
+                        '<country>US</country>' +
                     '</billTo>' +
                     '<shipTo>' +
-                        '<address>123 Main St</address>' +
+                        '<firstName>John</firstName>' +
+                        '<lastName>Public</lastName>' +
+                        '<company>XYZ Inc</company>' +
+                        '<address>456 Main St</address>' +
+                        '<city>Othertown</city>' +
+                        '<state>BC</state>' +
+                        '<zip>22222</zip>' +
+                        '<country>CA</country>' +
                     '</shipTo>' +
                 '</subscription>' +
             '</ARBCreateSubscriptionRequest>'
