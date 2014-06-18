@@ -1,6 +1,6 @@
 {
   "name": "authorize-net-arb",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Authorize.net Automated Recurring Billing (ARB)",
   "homepage": "https://github.com/reywood/node-authorize-net-arb",
   "bugs": {
