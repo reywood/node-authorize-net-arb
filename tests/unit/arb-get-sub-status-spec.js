@@ -46,6 +46,7 @@ describe("arb.client.getSubscriptionStatus", function() {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 
+            error.should.be.instanceOf(Error);
             error.refId.should.equal("my-ref");
             error.source.should.equal("auth-net");
             error.code.should.equal("E00035");
@@ -62,6 +63,7 @@ describe("arb.client.getSubscriptionStatus", function() {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 
+            error.should.be.instanceOf(Error);
             error.refId.should.equal("my-ref");
             error.source.should.equal("xml");
             error.message.should.equal("Failed to parse XML response");
@@ -77,6 +79,7 @@ describe("arb.client.getSubscriptionStatus", function() {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 
+            error.should.be.instanceOf(Error);
             error.refId.should.equal("my-ref");
             error.source.should.equal("http");
             error.message.should.equal("An HTTP error occurred");

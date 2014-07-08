@@ -27,7 +27,7 @@ FakeRequest.prototype.end = function() {
     if (throwErrorOnNextRequest) {
         throwErrorOnNextRequest = false;
         if (this.eventHandlers["error"]) {
-            this.eventHandlers["error"]({ message: "An HTTP error occurred" });
+            this.eventHandlers["error"](new Error("An HTTP error occurred"));
         }
         return;
     }

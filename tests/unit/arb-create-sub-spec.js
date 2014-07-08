@@ -146,6 +146,7 @@ describe("arb.client.createSubscription", function() {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 
+            error.should.be.instanceOf(Error);
             error.refId.should.equal("my-ref");
             error.source.should.equal("auth-net");
             error.code.should.equal("E00017");
@@ -162,6 +163,7 @@ describe("arb.client.createSubscription", function() {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 
+            error.should.be.instanceOf(Error);
             error.refId.should.equal("my-ref");
             error.source.should.equal("auth-net");
             error.code.should.equal("E00003");
@@ -178,6 +180,7 @@ describe("arb.client.createSubscription", function() {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 
+            error.should.be.instanceOf(Error);
             error.refId.should.equal("my-ref");
             error.source.should.equal("http");
             error.message.should.equal("Unexpected XML response received");
@@ -193,6 +196,7 @@ describe("arb.client.createSubscription", function() {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 
+            error.should.be.instanceOf(Error);
             error.refId.should.equal("my-ref");
             error.source.should.equal("xml");
             error.message.should.equal("Failed to parse XML response");
@@ -208,6 +212,7 @@ describe("arb.client.createSubscription", function() {
             (typeof error === "undefined").should.be.false;
             (typeof response === "undefined").should.be.true;
 
+            error.should.be.instanceOf(Error);
             error.refId.should.equal("my-ref");
             error.source.should.equal("http");
             error.message.should.equal("An HTTP error occurred");
