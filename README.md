@@ -1,6 +1,6 @@
 # authorize-net-arb
 
-[![Build Status](https://travis-ci.org/reywood/node-authorize-net-arb.svg?branch=master)](https://travis-ci.org/reywood/node-authorize-net-arb)
+[![Build Status](https://travis-ci.org/reywood/node-authorize-net-arb.svg?branch=master)](https://travis-ci.org/reywood/node-authorize-net-arb) [![Coverage Status](https://img.shields.io/coveralls/reywood/node-authorize-net-arb.svg)](https://coveralls.io/r/reywood/node-authorize-net-arb?branch=master)
 
 Authorize.net Automated Recurring Billing (ARB) support for nodejs. Check out [Authorize.net's ARB page](http://www.authorize.net/solutions/merchantsolutions/merchantservices/automatedrecurringbilling/) for more info about their service. You will need to be familiar with the [ARB XML API](http://developer.authorize.net/api/arb/) ([PDF](http://www.authorize.net/support/ARB_guide.pdf)) in order to know what fields are appropriate to use and when to use them.
 
