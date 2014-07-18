@@ -132,7 +132,7 @@ describe("arb.client.updateSubscription", function() {
 
             error.should.be.instanceOf(Error);
             error.refId.should.equal("my-ref");
-            error.source.should.equal("http");
+            error.source.should.equal("xml");
             error.message.should.equal("Unexpected XML response received");
 
             done();
