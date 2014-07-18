@@ -31,17 +31,21 @@
     "url": "git://github.com/reywood/node-authorize-net-arb.git"
   },
   "scripts": {
-    "test": "grunt"
+    "test": "grunt",
+    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec tests/unit/**/*-spec.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
-  "author": "Sean Dwyer",
   "license": "ISC",
   "engines": {
     "node": ">= 0.10.0"
   },
   "devDependencies": {
+    "coveralls": "^2.11.1",
     "grunt": "^0.4.5",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-simple-mocha": "^0.4.0",
+    "istanbul": "^0.3.0",
+    "mocha": "^1.20.1",
+    "mocha-lcov-reporter": "0.0.1",
     "should": "^4.0.4"
   },
   "dependencies": {

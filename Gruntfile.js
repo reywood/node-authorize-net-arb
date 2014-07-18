@@ -24,6 +24,7 @@ module.exports = function(grunt) {
         simplemocha: {
             options: {
                 ignoreLeaks: false,
+                reporter: "spec",
                 ui: "bdd",
                 useColors: !grunt.option("no-color")
             },
